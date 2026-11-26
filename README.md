@@ -56,15 +56,26 @@ cp .env.example .env
 # 3. Start PostgreSQL
 docker compose up -d
 
-# 4. Backend (http://localhost:3000, Swagger at /api/docs)
+# 4. Build the API once, then apply migrations and load demo data
+npm run build:api
+npm run migration:run --workspace api
+npm run seed --workspace api
+
+# 5. Backend (http://localhost:3000, Swagger at /api/docs)
 npm run dev:api
 
-# 5. Frontend (defaults to http://localhost:3000 too — mind the port)
+# 6. Frontend (defaults to http://localhost:3000 too — mind the port)
 npm run dev:web
 ```
 
 > If ports 3000 clash between api and web, set `PORT` for Nest in `.env`
 > (e.g. 4000) and/or pass `-p` to `next dev`.
+>
+> If port 5432 is already taken by another PostgreSQL instance on your
+> machine, change `POSTGRES_PORT`/`DB_PORT` in `.env` (e.g. 5433).
+
+Demo accounts created by the seed script (password for all: `password123`):
+`admin@magazine.test`, `author@magazine.test`, `reader@magazine.test`.
 
 ## Useful scripts (from the root)
 
@@ -75,9 +86,15 @@ npm run dev:web
 | `npm run build:api` / `build:web` | Production build |
 | `npm run lint` | Lint both apps (`oxlint` for api, `eslint` for web) |
 | `npm run test:api` | API unit tests (vitest) |
+| `npm run migration:generate --workspace api -- <path>` | Generate a migration from entity changes (requires a build first) |
+| `npm run migration:run --workspace api` | Apply pending migrations |
+| `npm run seed --workspace api` | Reset and load demo data (requires a build first) |
 
 ## Development status
 
-The project is under active development. Current stage: bare monorepo skeleton
-(Nest API + Next.js frontend + Postgres) with no domain logic yet. Progress by
-step and pattern is tracked in `docs/patterns.md` and the commit history.
+The project is under active development. Current stage: database schema is in
+place — all core entities (users, categories, articles, media, issues, comments,
+polls/quizzes, collections, subscriptions, payments, partners, ad campaigns) are
+modeled, migrated, and seeded with demo data. No business logic, auth, or design
+patterns wired up yet. Progress by step and pattern is tracked in
+`docs/patterns.md` and the commit history.
