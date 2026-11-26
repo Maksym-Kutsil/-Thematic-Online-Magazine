@@ -6,7 +6,7 @@
 
 | Патерн | Категорія | Де застосовано | Статус |
 |---|---|---|---|
-| Singleton | Creational | `AppConfig` (власна реалізація, без DI-контейнера) | не реалізовано |
+| Singleton | Creational | `AppConfig` (`apps/api/src/common/config/app-config.ts`) — приватний конструктор + статичний `getInstance()`, без DI-контейнера | реалізовано |
 | Factory Method | Creational | `ContentFactory` (article/quiz/poll/gallery), `AccessPolicyFactory` | не реалізовано |
 | Builder | Creational | `SpecialIssueBuilder` («Журнал місяця») | не реалізовано |
 | Composite | Structural | `Issue` → `Rubric` → `Article`; `Collection` | не реалізовано |
