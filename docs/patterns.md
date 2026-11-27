@@ -8,7 +8,7 @@
 |---|---|---|---|
 | Singleton | Creational | `AppConfig` (`apps/api/src/common/config/app-config.ts`) — приватний конструктор + статичний `getInstance()`, без DI-контейнера | реалізовано |
 | Factory Method | Creational | `ContentFactory`/`ContentCreator` family (`apps/api/src/modules/articles/content/`) — produces `ArticleView` for article/quiz/poll/gallery; `AccessPolicyFactory` (`apps/api/src/modules/subscriptions/access-policy/`) — produces `AccessPolicy` for Free/Premium | реалізовано |
-| Builder | Creational | `SpecialIssueBuilder` («Журнал місяця») | не реалізовано |
+| Builder | Creational | `SpecialIssueBuilder` + `SpecialIssueDirector` (`apps/api/src/modules/issues/builder/`) — складає `SpecialIssueBlueprint` для «Журналу місяця» крок за кроком | реалізовано |
 | Composite | Structural | `Issue` → `Rubric` → `Article`; `Collection` | не реалізовано |
 | Proxy | Structural | `PremiumContentProxy` — приховує ексклюзивний контент | не реалізовано |
 | Decorator | Structural | `ArticleView`: `AdInjectingDecorator`, `SponsorLabelDecorator` | не реалізовано |
